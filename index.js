@@ -12,8 +12,8 @@ class ShowBuildFilesPlugin {
         content += `- ${file}\n`;
       }
 
-      for (let chunk in compilation.chunks) {
-        content += `- ${chunk}\n`;
+      for (let i = 0, l = compilation.chunks.length; i < l; i++) {
+        content += `- ${compilation.chunks[i]}\n`;
       }
 
       const name = this.options.fileName || 'buildFiles.md';
