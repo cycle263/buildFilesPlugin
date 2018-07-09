@@ -7,19 +7,23 @@ class ShowBuildFilesPlugin {
 
   apply(compiler) {
     compiler.hooks.afterCompile.tap("ShowBuildFilesPlugin", compilation => {
-      let files = '## Build files:\n\n';
+      let content = '## Build files:\n\n';
       for (let file in compilation.assets) {
-        files += `- ${file}\n`;
+        content += `- ${file}\n`;
+      }
+
+      for (let chunk in compilation.chunks) {
+        content += `- ${chunk}\n`;
       }
 
       const name = this.options.fileName || 'buildFiles.md';
 
       compilation.assets[name] = {
         source: function () {
-          return files;
+          return content;
         },
         size: function () {
-          return files.length;
+          return content.length;
         }
       };
     });
